@@ -24,19 +24,25 @@
             <!-- Data rows will be inserted here -->
         </tbody>
     </table>
-    <script>
-        // Fetch data from the backend (assume /data endpoint returns JSON)
+        <script>
+        // Format ISO timestamp to readable local date/time
+        function formatTimestamp(ts) {
+            const d = new Date(ts);
+            return d.toLocaleString();
+        }
+
         fetch('/data')
             .then(response => response.json())
             .then(data => {
                 const tbody = document.querySelector('#data-table tbody');
+                tbody.innerHTML = "";
                 data.forEach(row => {
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
-                        <td>${row.timestamp}</td>
+                        <td>${formatTimestamp(row.timestamp)}</td>
                         <td>${row.temperature}</td>
                         <td>${row.humidity}</td>
-                        <td>${row.soil_moisture}</td>
+                        <td>${parseFloat(row.soil_moisture).toFixed(2)}</td>
                     `;
                     tbody.appendChild(tr);
                 });
