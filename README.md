@@ -46,4 +46,4 @@ Temperature: 23 °C, Humidity: 45 %, Soil Moisture: 67.89 %
 
 ---
 **Author:**  
-[Samuel Schwarz]
+Samuel Schwarz
