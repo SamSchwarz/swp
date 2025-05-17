@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sensor Data Log</title>
+    <style>
+        table { border-collapse: collapse; width: 80%; margin: 20px auto; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+        th { background: #f0f0f0; }
+    </style>
+</head>
+<body>
+    <h2 style="text-align:center;">Sensor Data Log</h2>
+    <table id="data-table">
+        <thead>
+            <tr>
+                <th>Timestamp</th>
+                <th>Temperature (°C)</th>
+                <th>Humidity (%)</th>
+                <th>Soil Moisture (%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data rows will be inserted here -->
+        </tbody>
+    </table>
+    <script>
+        // Fetch data from the backend (assume /data endpoint returns JSON)
+        fetch('/data')
+            .then(response => response.json())
+            .then(data => {
+                const tbody = document.querySelector('#data-table tbody');
+                data.forEach(row => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${row.timestamp}</td>
+                        <td>${row.temperature}</td>
+                        <td>${row.humidity}</td>
+                        <td>${row.soil_moisture}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            })
+            .catch(err => {
+                document.querySelector('#data-table tbody').innerHTML = 
+                    `<tr><td colspan="4">Failed to load data</td></tr>`;
+            });
+    </script>
+</body>
+</html>
